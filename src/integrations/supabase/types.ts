@@ -14,16 +14,270 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      civic_issues: {
+        Row: {
+          address: string | null
+          assigned_to: string | null
+          category: Database["public"]["Enums"]["issue_category"]
+          created_at: string
+          department: string | null
+          description: string
+          id: string
+          image_urls: string[] | null
+          latitude: number | null
+          longitude: number | null
+          priority: Database["public"]["Enums"]["issue_priority"]
+          reporter_id: string
+          resolved_at: string | null
+          status: Database["public"]["Enums"]["issue_status"]
+          title: string
+          updated_at: string
+          votes_count: number | null
+        }
+        Insert: {
+          address?: string | null
+          assigned_to?: string | null
+          category: Database["public"]["Enums"]["issue_category"]
+          created_at?: string
+          department?: string | null
+          description: string
+          id?: string
+          image_urls?: string[] | null
+          latitude?: number | null
+          longitude?: number | null
+          priority?: Database["public"]["Enums"]["issue_priority"]
+          reporter_id: string
+          resolved_at?: string | null
+          status?: Database["public"]["Enums"]["issue_status"]
+          title: string
+          updated_at?: string
+          votes_count?: number | null
+        }
+        Update: {
+          address?: string | null
+          assigned_to?: string | null
+          category?: Database["public"]["Enums"]["issue_category"]
+          created_at?: string
+          department?: string | null
+          description?: string
+          id?: string
+          image_urls?: string[] | null
+          latitude?: number | null
+          longitude?: number | null
+          priority?: Database["public"]["Enums"]["issue_priority"]
+          reporter_id?: string
+          resolved_at?: string | null
+          status?: Database["public"]["Enums"]["issue_status"]
+          title?: string
+          updated_at?: string
+          votes_count?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "civic_issues_assigned_to_fkey"
+            columns: ["assigned_to"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "civic_issues_reporter_id_fkey"
+            columns: ["reporter_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["user_id"]
+          },
+        ]
+      }
+      issue_comments: {
+        Row: {
+          comment: string
+          commenter_id: string
+          created_at: string
+          id: string
+          is_official: boolean | null
+          issue_id: string
+        }
+        Insert: {
+          comment: string
+          commenter_id: string
+          created_at?: string
+          id?: string
+          is_official?: boolean | null
+          issue_id: string
+        }
+        Update: {
+          comment?: string
+          commenter_id?: string
+          created_at?: string
+          id?: string
+          is_official?: boolean | null
+          issue_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "issue_comments_commenter_id_fkey"
+            columns: ["commenter_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "issue_comments_issue_id_fkey"
+            columns: ["issue_id"]
+            isOneToOne: false
+            referencedRelation: "civic_issues"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      issue_status_history: {
+        Row: {
+          changed_by: string
+          created_at: string
+          id: string
+          issue_id: string
+          new_status: Database["public"]["Enums"]["issue_status"]
+          notes: string | null
+          old_status: Database["public"]["Enums"]["issue_status"] | null
+        }
+        Insert: {
+          changed_by: string
+          created_at?: string
+          id?: string
+          issue_id: string
+          new_status: Database["public"]["Enums"]["issue_status"]
+          notes?: string | null
+          old_status?: Database["public"]["Enums"]["issue_status"] | null
+        }
+        Update: {
+          changed_by?: string
+          created_at?: string
+          id?: string
+          issue_id?: string
+          new_status?: Database["public"]["Enums"]["issue_status"]
+          notes?: string | null
+          old_status?: Database["public"]["Enums"]["issue_status"] | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "issue_status_history_changed_by_fkey"
+            columns: ["changed_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "issue_status_history_issue_id_fkey"
+            columns: ["issue_id"]
+            isOneToOne: false
+            referencedRelation: "civic_issues"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      issue_votes: {
+        Row: {
+          created_at: string
+          id: string
+          issue_id: string
+          vote_type: string
+          voter_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          issue_id: string
+          vote_type: string
+          voter_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          issue_id?: string
+          vote_type?: string
+          voter_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "issue_votes_issue_id_fkey"
+            columns: ["issue_id"]
+            isOneToOne: false
+            referencedRelation: "civic_issues"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "issue_votes_voter_id_fkey"
+            columns: ["voter_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["user_id"]
+          },
+        ]
+      }
+      profiles: {
+        Row: {
+          created_at: string
+          department: string | null
+          email: string
+          full_name: string
+          id: string
+          phone: string | null
+          role: Database["public"]["Enums"]["user_role"]
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          department?: string | null
+          email: string
+          full_name: string
+          id?: string
+          phone?: string | null
+          role?: Database["public"]["Enums"]["user_role"]
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          department?: string | null
+          email?: string
+          full_name?: string
+          id?: string
+          phone?: string | null
+          role?: Database["public"]["Enums"]["user_role"]
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      get_user_role: {
+        Args: { user_uuid: string }
+        Returns: Database["public"]["Enums"]["user_role"]
+      }
     }
     Enums: {
-      [_ in never]: never
+      issue_category:
+        | "infrastructure"
+        | "sanitation"
+        | "traffic"
+        | "environment"
+        | "utilities"
+        | "safety"
+        | "other"
+      issue_priority: "low" | "medium" | "high" | "critical"
+      issue_status:
+        | "pending"
+        | "in_progress"
+        | "resolved"
+        | "rejected"
+        | "escalated"
+      user_role: "citizen" | "admin" | "employee"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +404,25 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      issue_category: [
+        "infrastructure",
+        "sanitation",
+        "traffic",
+        "environment",
+        "utilities",
+        "safety",
+        "other",
+      ],
+      issue_priority: ["low", "medium", "high", "critical"],
+      issue_status: [
+        "pending",
+        "in_progress",
+        "resolved",
+        "rejected",
+        "escalated",
+      ],
+      user_role: ["citizen", "admin", "employee"],
+    },
   },
 } as const
