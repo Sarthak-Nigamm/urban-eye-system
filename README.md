@@ -1,4 +1,4 @@
-# Welcome to your civic-sense project
+# Welcome to Urban-eye
 
 ## How can I edit this code?
 
@@ -12,13 +12,13 @@ Follow these steps:
 
 ```sh
 # Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+git clone https://github.com/Sarthak-Nigamm/urban-eye-system.git
 
 # Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+cd urban-eye-system
 
 # Step 3: Install the necessary dependencies.
-npm i
+npm install
 
 # Step 4: Start the development server with auto-reloading and an instant preview.
 npm run dev
